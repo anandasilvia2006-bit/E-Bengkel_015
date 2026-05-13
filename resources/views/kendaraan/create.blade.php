@@ -2,43 +2,38 @@
 
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>Daftar Antrean Kendaraan</h3>
-        <!-- Tombol Tambah Kendaraan di atas tabel -->
-        <a href="{{ route('kendaraan.create') }}" class="btn btn-primary">Tambah Kendaraan</a>
-    </div>
+    <h3>Tambah Kendaraan Baru</h3>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <!-- Form untuk simpan data (Poin 4 soal) -->
+            <form action="{{ route('kendaraan.store') }}" method="POST">
+                @csrf <!-- Proteksi CSRF sesuai instruksi -->
+                
+                <div class="mb-3">
+                    <label class="form-label">Plat Nomor</label>
+                    <input type="text" name="plat_nomor" class="form-control" placeholder="Contoh: BK 1234 XX" required>
+                </div>
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>No</th>
-                <th>Plat Nomor</th>
-                <th>Nama Pemilik</th>
-                <th>Merk Kendaraan</th>
-                <th>Keluhan</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($kendaraans as $index => $k)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $k->plat_nomor }}</td>
-                <td>{{ $k->nama_pemilik }}</td>
-                <td>{{ $k->merk_kendaraan }}</td>
-                <td>{{ $k->keluhan }}</td>
-                <td>
-                    <!-- Tombol untuk fitur Update & Delete nanti -->
-                    <a href="{{ route('kendaraan.edit', $k->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{{ route('kendaraan.destroy', $k->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                <div class="mb-3">
+                    <label class="form-label">Nama Pemilik</label>
+                    <input type="text" name="nama_pemilik" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Merk Kendaraan</label>
+                    <input type="text" name="merk_kendaraan" class="form-control" placeholder="Contoh: Honda, Yamaha, Toyota" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Keluhan</label>
+                    <textarea name="keluhan" class="form-control" rows="3" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Simpan Data</button>
+                <a href="{{ route('kendaraan.index') }}" class="btn btn-secondary">Batal</a>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
